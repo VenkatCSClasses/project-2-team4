@@ -50,7 +50,11 @@ public class MainApp extends Application{
         TextField usernameTF = new TextField();
         PasswordField passwordTF = new PasswordField();
         Button bLogin = new Button("Login");
-        bLogin.setOnAction(e -> ((Stage) bLogin.getScene().getWindow()).setScene(createMainScene()));
+        //do login check in the event below; if successful, change scenes with code given
+        bLogin.setOnAction(e -> {
+            ((Stage) bLogin.getScene().getWindow()).setScene(createMainScene());
+            
+        });
 
     
         l.setLayoutX(200);
