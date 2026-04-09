@@ -27,18 +27,25 @@ public class MainApp extends Application{
         Label l = new Label("Login Successful!");
         TextField searchTF = new TextField();
         Button bSearch = new Button("Search");
+        Button bLogout = new Button("Logout");
+        bLogout.setOnAction(e -> {
+            ((Stage) bLogout.getScene().getWindow()).setScene(createLoginScene());
+        });
 
 
         l.setLayoutX(200);
         l.setLayoutY(0);
         bSearch.setLayoutX(200);
         bSearch.setLayoutY(200);
+        bLogout.setLayoutX(250);
+        bLogout.setLayoutY(200);
         searchTF.setLayoutX(200);
         searchTF.setLayoutY(175);
 
         newPane.getChildren().add(bSearch);
         newPane.getChildren().add(l);
         newPane.getChildren().add(searchTF);
+        newPane.getChildren().add(bLogout);
         Scene MenuScene = new Scene(newPane, 600, 400);
         return MenuScene;
     }
@@ -66,6 +73,8 @@ public class MainApp extends Application{
         l.setLayoutY(0);
         bLogin.setLayoutX(200);
         bLogin.setLayoutY(200);
+        bRegister.setLayoutX(250);
+        bRegister.setLayoutY(200);
         usernameTF.setLayoutX(200);
         usernameTF.setLayoutY(150);
         passwordTF.setLayoutX(200);
@@ -75,6 +84,7 @@ public class MainApp extends Application{
         p.getChildren().add(l);
         p.getChildren().add(usernameTF);
         p.getChildren().add(passwordTF);
+        p.getChildren().add(bRegister);
         Scene LoginScene = new Scene(p, 600, 400);
         return LoginScene;
     }
