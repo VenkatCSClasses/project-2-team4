@@ -46,14 +46,19 @@ public class MainApp extends Application{
     public Scene createLoginScene(){
         Pane p = new Pane(); 
         p.setStyle("-fx-background-color: grey;");
-        Label l = new Label("Welcome to the Reader! Please enter username and password");
+        Label l = new Label("Welcome to the Reader! Please enter username and password. \nPress 'Register' if the account does not yet exist");
         TextField usernameTF = new TextField();
         PasswordField passwordTF = new PasswordField();
         Button bLogin = new Button("Login");
-        //do login check in the event below; if successful, change scenes with code given
+        Button bRegister = new Button("Register");
         bLogin.setOnAction(e -> {
             ((Stage) bLogin.getScene().getWindow()).setScene(createMainScene());
-            
+            //do login check in the event below; if successful, change scenes with code given
+
+        });
+        bRegister.setOnAction(e -> {
+            //account registration code goes here
+            l.setText("Account Registered! Please enter your account information and press login!");
         });
 
     
