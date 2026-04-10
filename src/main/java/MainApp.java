@@ -8,11 +8,26 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
+import model.User;
+import service.Authentication;
+import database.UserRepo;
+import database.DatabaseManager;
+
+
 
 public class MainApp extends Application{
     
+    private Authentication authService;
     @Override
     public void start(Stage stage) {
+        
+        try {
+            DatabaseManager.initialize();
+            authService = new Authentication(new UserRepo());
+        } catch (Exception e) {
+            System.out.println("Database failed to initialize: " + e.getMessage());
+        }
+
         stage.setScene(createLoginScene());
         stage.show();
     }
@@ -61,11 +76,26 @@ public class MainApp extends Application{
         bLogin.setOnAction(e -> {
             ((Stage) bLogin.getScene().getWindow()).setScene(createMainScene());
             //do login check in the event below; if successful, change scenes with code given
-
+            try {
+                
+                User user = authService.login(usernameTF.getText(), passwordTF.getText());
+                ((Stage) bLogin.getScene().getWindow()).setScene(createMainScene(user));
+            } catch (Exception ex) {
+                l.setText("Login failed: " + ex.getMessage());
+            }
         });
+        
         bRegister.setOnAction(e -> {
             //account registration code goes here
-            l.setText("Account Registered! Please enter your account information and press login!");
+            try {
+                
+                authService.register(usernameTF.getText(), passwordTF.getText());
+                l.setText("Account Registered! Please enter your account information and press login!");
+            } catch (Exception ex) {
+                l.setText("Registration failed: " + ex.getMessage());
+            }
+            
+
         });
 
     
