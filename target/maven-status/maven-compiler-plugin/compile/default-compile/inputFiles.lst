@@ -1,3 +1,10 @@
 C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\MainApp.java
-C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\Librarian.java
-C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\User.java
+C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\service\Authentication.java
+C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\model\User.java
+C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\database\DatabaseManager.java
+C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\passwordUtil\PasswordUtil.java
+C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\Profile.java
+C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\Book.java
+C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\SavedBooks.java
+C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\database\UserRepo.java
+C:\Users\drweb\Java Git\345\project-2-team4\src\main\java\Search.java
