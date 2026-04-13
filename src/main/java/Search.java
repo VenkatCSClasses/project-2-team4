@@ -36,8 +36,10 @@ public class Search {
         Button bSearchGenre = new Button("Search by Genre");
         Button bBack = new Button("Back");
         bBack.setOnAction(e -> {
-            //Stage stage = (Stage) bSearchTitle.getScene().getWindow();
-            //stage.setScene(createResultsScene(MainApp.createMainScene()));
+            Stage stage = (Stage) bSearchTitle.getScene().getWindow();
+            MainApp test = new MainApp();
+            test.setPrimaryStage(stage);
+            stage.setScene(test.createMainScene(user));
         });
 
         bSearchTitle.setOnAction(e -> {

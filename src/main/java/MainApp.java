@@ -17,6 +17,10 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private User currentUser;
 
+    public void setPrimaryStage(Stage stage){
+        this.primaryStage = stage;
+    }
+
     @Override
     public void start(Stage stage) {
         this.primaryStage = stage;
