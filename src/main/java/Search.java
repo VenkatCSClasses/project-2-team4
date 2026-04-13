@@ -179,8 +179,8 @@ public class Search {
         bSearchGenre.setMinWidth(100);
 
 
-        bBack.setLayoutX(350);
-        bBack.setLayoutY(550);
+        bBack.setLayoutX(0);
+        bBack.setLayoutY(0);
 
 
         searchTF.setLayoutX(200);
@@ -245,7 +245,41 @@ public class Search {
 
         bBook5.setLayoutX(450);
         bBook5.setLayoutY(200);
-        
+
+        //actions for book selection buttons
+        bBook1.setOnAction(e -> {
+            Stage stage = (Stage) bBack.getScene().getWindow();
+            //TODO stage.setScene(READER OR SMTH IDK);
+        });
+
+        bBook2.setOnAction(e -> {
+            Stage stage = (Stage) bBack.getScene().getWindow();
+            //TODO stage.setScene(READER OR SMTH IDK);
+        });
+
+        bBook3.setOnAction(e -> {
+            Stage stage = (Stage) bBack.getScene().getWindow();
+            //TODO stage.setScene(READER OR SMTH IDK);
+        });
+
+        bBook4.setOnAction(e -> {
+            Stage stage = (Stage) bBack.getScene().getWindow();
+            //TODO stage.setScene(READER OR SMTH IDK);
+        });
+
+        bBook5.setOnAction(e -> {
+            Stage stage = (Stage) bBack.getScene().getWindow();
+            //TODO stage.setScene(READER OR SMTH IDK);
+        });
+
+        //back button layout
+        bBack.setLayoutX(0);
+        bBack.setLayoutY(0);
+
+        bBack.setOnAction(e -> {
+            Stage stage = (Stage) bBack.getScene().getWindow();
+            stage.setScene(createSearchScene());
+        });
 
         newPane.getChildren().addAll(bk1, bk2, bk3, bk4, bk5, bBook1, bBook2, bBook3, bBook4, bBook5, bBack);
         Scene ResultsScene = new Scene(newPane, 600, 400);
