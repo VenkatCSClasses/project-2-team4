@@ -43,7 +43,7 @@ public class Profile {
         goBack.setOnAction(e -> { // go back to main scene when button is clicked
             //Stage stage = (Stage) goBack.getScene().getWindow();
             MainApp mainApp = new MainApp();
-            ((Stage) goBack.getScene().getWindow()).setScene(mainApp.createMainScene()); 
+            //((Stage) goBack.getScene().getWindow()).setScene(mainApp.createMainScene()); 
             /** eventually createMainScene needs to be changed to createMainScene(currentUser)
              *   and currentUser needs to be passed to Profile constructor
              */
