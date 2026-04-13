@@ -1,12 +1,20 @@
+import database.UserBooksRepo;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.User;
 
 public class Search {
-    public static Scene createSearchScene(){
+    private final User user;
+
+    public Search(User user) {
+        this.user = user;
+    }
+    
+    public Scene createSearchScene(){
         Pane newPane = new Pane();
         newPane.setStyle("-fx-background-color: grey;");
         Label l = new Label("Enter a title, author, or genre into the search bar and press the corresponding button!");
@@ -17,7 +25,6 @@ public class Search {
         Button bBack = new Button("Back");
         bBack.setOnAction(e -> {
             //((Stage) bBack.getScene().getWindow()).setScene(MainApp.createMainScene());
-            //must make static in main
         });
 
 

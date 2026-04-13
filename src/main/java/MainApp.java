@@ -48,8 +48,11 @@ public class MainApp extends Application {
         Button bSavedBooks = new Button("Saved Books");
         Button bLogout = new Button("Logout");
 
-        bSearch.setOnAction(e -> primaryStage.setScene(new Search().createSearchScene()));        bProfile.setOnAction(e -> primaryStage.setScene(new Profile().createProfileScene()));
-        bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks().createSavedBooksScene()));
+        Search test = new Search(user);
+        SavedBooks test2 = new SavedBooks(user, null);
+        bSearch.setOnAction(e -> primaryStage.setScene(test.createSearchScene()));        
+        bProfile.setOnAction(e -> primaryStage.setScene(test2.createScene()));
+        //bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks().createSavedBooksScene()));
         bLogout.setOnAction(e -> primaryStage.setScene(createLoginScene()));
 
         l.setLayoutX(200);           l.setLayoutY(20);
