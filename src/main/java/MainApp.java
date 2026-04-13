@@ -43,6 +43,11 @@ public class MainApp extends Application{
         TextField searchTF = new TextField();
         Button bSearch = new Button("Search");
         Button bLogout = new Button("Logout");
+        Button profileButton = new Button("Profile");
+        profileButton.setOnAction(e -> {
+            Profile profile = new Profile();
+            ((Stage) profileButton.getScene().getWindow()).setScene(profile.createProfileScene());
+        });
         bLogout.setOnAction(e -> {
             ((Stage) bLogout.getScene().getWindow()).setScene(createLoginScene());
         });
