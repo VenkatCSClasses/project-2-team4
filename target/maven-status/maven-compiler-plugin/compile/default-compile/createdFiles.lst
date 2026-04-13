@@ -1,2 +1,5 @@
-MainApp.class
-User.class
+model/User.class
+database/UserRepo.class
+passwordUtil/PasswordUtil.class
+service/Authentication.class
+Book.class

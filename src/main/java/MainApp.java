@@ -36,10 +36,14 @@ public class MainApp extends Application{
         launch();
     }
 
+
+
     public Scene createMainScene(){
         Pane newPane = new Pane();
         newPane.setStyle("-fx-background-color: grey;");
+
         Label l = new Label("Login Successful!");
+        
         TextField searchTF = new TextField();
         Button bSearch = new Button("Search");
         Button bLogout = new Button("Logout");
