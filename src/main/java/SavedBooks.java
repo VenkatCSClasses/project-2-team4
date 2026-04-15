@@ -118,7 +118,7 @@ public class SavedBooks {
         Pane pane = new Pane();
 
         javafx.scene.web.WebView webView = new javafx.scene.web.WebView();
-        webView.getEngine().load("https://www.gutenberg.org/ebooks/" + gutenbergId);
+        webView.getEngine().load("https://www.gutenberg.org/cache/epub/" + gutenbergId + "/pg" + gutenbergId + "-images.html");
         webView.setPrefSize(600, 360);
         webView.setLayoutX(0);
         webView.setLayoutY(40);

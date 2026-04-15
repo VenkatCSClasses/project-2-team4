@@ -35,7 +35,8 @@ public class SelectedBook {
         Button returnButton = new Button("Return to Search");
 
         readButton.setOnAction(e -> {
-            //open webview page
+            Stage stage = (Stage) readButton.getScene().getWindow();
+            stage.setScene(createReaderScene(stage, Integer.parseInt(book.getId()), book.getTitle()));
         });
 
         addToLibButton.setOnAction(e -> {
@@ -64,5 +65,27 @@ public class SelectedBook {
         
         Scene SelectScene = new Scene(newPane, 600, 400);
         return SelectScene; 
+    }
+
+    private Scene createReaderScene(Stage stage, int gutenbergId, String bookTitle) {
+        Pane pane = new Pane();
+
+        javafx.scene.web.WebView webView = new javafx.scene.web.WebView();
+        webView.getEngine().load("https://www.gutenberg.org/cache/epub/" + gutenbergId + "/pg" + gutenbergId + "-images.html");
+        webView.setPrefSize(600, 360);
+        webView.setLayoutX(0);
+        webView.setLayoutY(40);
+
+        Label titleLabel = new Label(bookTitle);
+        Button bBack = new Button("Back to ");
+
+        titleLabel.setLayoutX(10); titleLabel.setLayoutY(10);
+        bBack.setLayoutX(480);     bBack.setLayoutY(10);
+
+        //update to go back to search
+        bBack.setOnAction(e -> stage.setScene(CreateSelectScene()));
+
+        pane.getChildren().addAll(titleLabel, bBack, webView);
+        return new Scene(pane, 600, 400);
     }
 }
