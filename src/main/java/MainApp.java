@@ -53,7 +53,7 @@ public class MainApp extends Application {
         Button bLogout = new Button("Logout");
 
         Search test = new Search(user);
-        SavedBooks test2 = new SavedBooks(user, null);
+        SavedBooks test2 = new SavedBooks(user);
         bSearch.setOnAction(e -> primaryStage.setScene(test.createSearchScene()));        
         bProfile.setOnAction(e -> primaryStage.setScene(new Profile().createProfileScene()));
         //bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks().createSavedBooksScene()));
