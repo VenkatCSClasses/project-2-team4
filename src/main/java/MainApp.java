@@ -56,7 +56,7 @@ public class MainApp extends Application {
         SavedBooks test2 = new SavedBooks(user);
         bSearch.setOnAction(e -> primaryStage.setScene(test.createSearchScene()));        
         bProfile.setOnAction(e -> primaryStage.setScene(new Profile().createProfileScene()));
-        //bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks().createSavedBooksScene()));
+        bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks(user).createSavedBooksScene()));
         bLogout.setOnAction(e -> primaryStage.setScene(createLoginScene()));
 
         l.setLayoutX(200);           l.setLayoutY(20);
