@@ -43,7 +43,9 @@ public class SelectedBook {
         });
 
         returnButton.setOnAction(e -> {
-            //return to original search
+            Stage stage = (Stage) returnButton.getScene().getWindow();
+            Search test = new Search(user);
+            stage.setScene(test.createResultsScene(results));
         });
 
         //new layout style, havent tested yet
