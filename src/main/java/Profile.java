@@ -8,7 +8,10 @@ import javafx.stage.Stage;
 public class Profile {
     public Scene createProfileScene(){
 
-        // TODO: pass MainApp or Stage reference to Profile constructor instead of using new MainApp()
+        //TODO: pass MainApp or Stage reference to Profile constructor instead of using new MainApp()
+        //TODO: library system setup and be able to sva ethe books
+        //TODO: make the profile page look nicer, maybe add a profile picture and make the username and password look better
+        //TODO: add a constructor with user parameter and use that to set username and password fields
         Pane newPane = new Pane();
         newPane.setStyle("-fx-background-color: grey;");
         Label username = new Label("Username:"); 
