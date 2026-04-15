@@ -249,27 +249,32 @@ public class Search {
         //actions for book selection buttons
         bBook1.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
-            //TODO stage.setScene(READER OR SMTH IDK);
+            SelectedBook test = new SelectedBook(user, results.get(0), results);
+            stage.setScene(test.CreateSelectScene());
         });
 
         bBook2.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
-            //TODO stage.setScene(READER OR SMTH IDK);
+            SelectedBook test = new SelectedBook(user, results.get(1), results);
+            stage.setScene(test.CreateSelectScene());
         });
 
         bBook3.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
-            //TODO stage.setScene(READER OR SMTH IDK);
+            SelectedBook test = new SelectedBook(user, results.get(2), results);
+            stage.setScene(test.CreateSelectScene());
         });
 
         bBook4.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
-            //TODO stage.setScene(READER OR SMTH IDK);
+            SelectedBook test = new SelectedBook(user, results.get(3), results);
+            stage.setScene(test.CreateSelectScene());
         });
 
         bBook5.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
-            //TODO stage.setScene(READER OR SMTH IDK);
+            SelectedBook test = new SelectedBook(user, results.get(4), results);
+            stage.setScene(test.CreateSelectScene());
         });
 
         //back button layout
