@@ -12,6 +12,8 @@ import model.User;
 import service.Authentication;
 import database.UserRepo;
 import database.DatabaseManager;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class MainApp extends Application {
 
@@ -45,7 +47,7 @@ public class MainApp extends Application {
     public Scene createMainScene(User user) {
         this.currentUser = user;
         BorderPane newPane = new BorderPane();
-        newPane.setStyle("-fx-background-color: grey;");
+        newPane.setStyle("-fx-background-color: CCD4BC;");
 
         Label l = new Label("Welcome, " + user.getUsername() + "!");
 
@@ -61,6 +63,12 @@ public class MainApp extends Application {
         bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks(user).createSavedBooksScene()));
         bLogout.setOnAction(e -> primaryStage.setScene(createLoginScene()));
 
+        Image cover1 = new Image("covers/frank.jpg");
+
+        ImageView coverImageView = new ImageView(cover1);
+        coverImageView.setFitHeight(100);
+        coverImageView.setFitWidth(50);
+
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
         hbox.setSpacing(10);
@@ -68,22 +76,29 @@ public class MainApp extends Application {
         hbox.setAlignment(Pos.CENTER);
         hbox.setStyle("-fx-background-color: #CCD4BC;");
 
+        HBox covers = new HBox();
+        covers.setSpacing(10);
+        covers.getChildren().add(coverImageView);
+        covers.setAlignment(Pos.CENTER);
+
+
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10));
         vbox.setSpacing(8);
         vbox.getChildren().addAll(l);
         vbox.setAlignment(Pos.CENTER);
-        vbox.setStyle("-fx-background-color: #CCD4BC;");
+        vbox.setStyle("-fx-background-color: #a5ab98;");
 
         newPane.setCenter(hbox);
         newPane.setTop(vbox);
+        newPane.setBottom(covers);
 
         return new Scene(newPane, 1200, 800);
     }
 
     public Scene createLoginScene() {
         BorderPane p = new BorderPane();
-        p.setStyle("-fx-background-color: grey;");
+        p.setStyle("-fx-background-color: CCD4BC;");
         Label l = new Label("Welcome! Please enter username and password.\nPress 'Register' if you don't have an account.");
         TextField usernameTF = new TextField();
         PasswordField passwordTF = new PasswordField();
@@ -129,6 +144,7 @@ public class MainApp extends Application {
         hbox.setSpacing(10);
         hbox.getChildren().addAll(l);
         hbox.setAlignment(Pos.CENTER);
+        hbox.setStyle("-fx-background-color: #a5ab98;");
 
         p.setCenter(vbox);
         p.setTop(hbox);
