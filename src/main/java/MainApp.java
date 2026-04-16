@@ -11,6 +11,10 @@ import javafx.scene.control.TextField;
 import model.User;
 import service.Authentication;
 import database.UserRepo;
+
+import java.io.File;
+import java.util.Random;
+
 import database.DatabaseManager;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -63,11 +67,32 @@ public class MainApp extends Application {
         bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks(user).createSavedBooksScene()));
         bLogout.setOnAction(e -> primaryStage.setScene(createLoginScene()));
 
-        Image cover1 = new Image("covers/frank.jpg");
+        Random rand = new Random();
+        int randomNum = rand.nextInt(13) + 1;
 
-        ImageView coverImageView = new ImageView(cover1);
-        coverImageView.setFitHeight(100);
-        coverImageView.setFitWidth(50);
+        ImageView coverImageView1 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
+        coverImageView1.setFitHeight(150);
+        coverImageView1.setFitWidth(100);
+        randomNum = rand.nextInt(13) + 1;
+
+        ImageView coverImageView2 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
+        coverImageView2.setFitHeight(150);
+        coverImageView2.setFitWidth(100);
+        randomNum = rand.nextInt(13) + 1; 
+
+        ImageView coverImageView3 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
+        coverImageView3.setFitHeight(150);
+        coverImageView3.setFitWidth(100);
+        randomNum = rand.nextInt(13) + 1; 
+
+        ImageView coverImageView4 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
+        coverImageView4.setFitHeight(150);
+        coverImageView4.setFitWidth(100);
+        randomNum = rand.nextInt(13) + 1; 
+
+        ImageView coverImageView5 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
+        coverImageView5.setFitHeight(150);
+        coverImageView5.setFitWidth(100);
 
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
@@ -76,10 +101,10 @@ public class MainApp extends Application {
         hbox.setAlignment(Pos.CENTER);
         hbox.setStyle("-fx-background-color: #CCD4BC;");
 
-        HBox covers = new HBox();
-        covers.setSpacing(10);
-        covers.getChildren().add(coverImageView);
-        covers.setAlignment(Pos.CENTER);
+        HBox coverBox = new HBox();
+        coverBox.setSpacing(10);
+        coverBox.getChildren().addAll(coverImageView1, coverImageView2, coverImageView3, coverImageView4, coverImageView5);
+        coverBox.setAlignment(Pos.CENTER);
 
 
         VBox vbox = new VBox();
@@ -91,7 +116,7 @@ public class MainApp extends Application {
 
         newPane.setCenter(hbox);
         newPane.setTop(vbox);
-        newPane.setBottom(covers);
+        newPane.setBottom(coverBox);
 
         return new Scene(newPane, 1200, 800);
     }
