@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+import database.UserBooksRepo;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,14 +16,18 @@ public class SelectedBook {
     private final User user;
     private final Book book;
     private final ArrayList<Book> results;
+    private final UserBooksRepo userBooksRepo;
+
 
     public SelectedBook(User user, Book book, ArrayList<Book> results) {
         this.user = user;
         this.book = book;
         this.results = results;
+        this.userBooksRepo = new UserBooksRepo();
     }
     
     public Scene CreateSelectScene(){
+        int id = Integer.parseInt(book.getId());
         BorderPane newPane = new BorderPane();
         newPane.setStyle("-fx-background-color: grey;");
         Label titleLabel = new Label(book.getTitle());
@@ -36,11 +41,15 @@ public class SelectedBook {
 
         readButton.setOnAction(e -> {
             Stage stage = (Stage) readButton.getScene().getWindow();
-            stage.setScene(createReaderScene(stage, Integer.parseInt(book.getId()), book.getTitle()));
+            stage.setScene(createReaderScene(stage, id, book.getTitle()));
         });
 
         addToLibButton.setOnAction(e -> {
-            //add to personal library
+            try {
+                this.userBooksRepo.addBook(user.getId(), id, book.getTitle(), book.getAuthors());
+            } catch (java.sql.SQLException ex) {
+                ex.printStackTrace();
+            }
         });
 
         returnButton.setOnAction(e -> {
