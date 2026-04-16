@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -42,14 +44,14 @@ public class MainApp extends Application {
 
     public Scene createMainScene(User user) {
         this.currentUser = user;
-        Pane newPane = new Pane();
+        BorderPane newPane = new BorderPane();
         newPane.setStyle("-fx-background-color: grey;");
 
         Label l = new Label("Welcome, " + user.getUsername() + "!");
 
         Button bSearch = new Button("Search");
         Button bProfile = new Button("Profile");
-        Button bSavedBooks = new Button("Saved Books");
+        Button bSavedBooks = new Button("My Library");
         Button bLogout = new Button("Logout");
 
         Search test = new Search(user);
@@ -59,18 +61,28 @@ public class MainApp extends Application {
         bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks(user).createSavedBooksScene()));
         bLogout.setOnAction(e -> primaryStage.setScene(createLoginScene()));
 
-        l.setLayoutX(200);           l.setLayoutY(20);
-        bSearch.setLayoutX(200);     bSearch.setLayoutY(150);
-        bProfile.setLayoutX(200);    bProfile.setLayoutY(180);
-        bSavedBooks.setLayoutX(200); bSavedBooks.setLayoutY(210);
-        bLogout.setLayoutX(200);     bLogout.setLayoutY(250);
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);
+        hbox.getChildren().addAll(bSearch, bProfile, bSavedBooks, bLogout);
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setStyle("-fx-background-color: #CCD4BC;");
 
-        newPane.getChildren().addAll(l, bSearch, bProfile, bSavedBooks, bLogout);
-        return new Scene(newPane, 600, 400);
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10));
+        vbox.setSpacing(8);
+        vbox.getChildren().addAll(l);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setStyle("-fx-background-color: #CCD4BC;");
+
+        newPane.setCenter(hbox);
+        newPane.setTop(vbox);
+
+        return new Scene(newPane, 1200, 800);
     }
 
     public Scene createLoginScene() {
-        Pane p = new Pane();
+        BorderPane p = new BorderPane();
         p.setStyle("-fx-background-color: grey;");
         Label l = new Label("Welcome! Please enter username and password.\nPress 'Register' if you don't have an account.");
         TextField usernameTF = new TextField();
@@ -96,13 +108,30 @@ public class MainApp extends Application {
             }
         });
 
-        l.setLayoutX(200);           l.setLayoutY(0);
-        usernameTF.setLayoutX(200);  usernameTF.setLayoutY(150);
-        passwordTF.setLayoutX(200);  passwordTF.setLayoutY(175);
-        bLogin.setLayoutX(200);      bLogin.setLayoutY(210);
-        bRegister.setLayoutX(260);   bRegister.setLayoutY(210);
 
-        p.getChildren().addAll(l, usernameTF, passwordTF, bLogin, bRegister);
-        return new Scene(p, 600, 400);
+
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10,10,15,12));
+        vbox.setSpacing(15);
+        vbox.getChildren().addAll(usernameTF, passwordTF, bLogin, bRegister);
+        vbox.setPrefWidth(150);
+        bLogin.setMinWidth(vbox.getPrefWidth());
+        bRegister.setMinWidth(vbox.getPrefWidth());
+        usernameTF.setMaxWidth(vbox.getPrefWidth());
+        passwordTF.setMaxWidth(vbox.getPrefWidth());
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setStyle("-fx-background-color: #CCD4BC;");
+
+
+
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 10, 15, 12));
+        hbox.setSpacing(10);
+        hbox.getChildren().addAll(l);
+        hbox.setAlignment(Pos.CENTER);
+
+        p.setCenter(vbox);
+        p.setTop(hbox);
+        return new Scene(p, 1200, 800);
     }
 }
