@@ -68,27 +68,28 @@ public class MainApp extends Application {
         bLogout.setOnAction(e -> primaryStage.setScene(createLoginScene()));
 
         Random rand = new Random();
-        int randomNum = rand.nextInt(13) + 1;
+        int max = 28;
+        int randomNum = rand.nextInt(max) + 1;
 
         ImageView coverImageView1 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
         coverImageView1.setFitHeight(150);
         coverImageView1.setFitWidth(100);
-        randomNum = rand.nextInt(13) + 1;
+        randomNum = rand.nextInt(max) + 1;
 
         ImageView coverImageView2 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
         coverImageView2.setFitHeight(150);
         coverImageView2.setFitWidth(100);
-        randomNum = rand.nextInt(13) + 1; 
+        randomNum = rand.nextInt(max) + 1; 
 
         ImageView coverImageView3 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
         coverImageView3.setFitHeight(150);
         coverImageView3.setFitWidth(100);
-        randomNum = rand.nextInt(13) + 1; 
+        randomNum = rand.nextInt(max) + 1; 
 
         ImageView coverImageView4 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
         coverImageView4.setFitHeight(150);
         coverImageView4.setFitWidth(100);
-        randomNum = rand.nextInt(13) + 1; 
+        randomNum = rand.nextInt(max) + 1; 
 
         ImageView coverImageView5 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
         coverImageView5.setFitHeight(150);
