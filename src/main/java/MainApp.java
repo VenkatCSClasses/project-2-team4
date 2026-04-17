@@ -54,19 +54,23 @@ public class MainApp extends Application {
         newPane.setStyle("-fx-background-color: CCD4BC;");
 
         Label l = new Label("Welcome, " + user.getUsername() + "!");
-        l.setStyle("-fx-font: 50px Tahoma;");
+        l.setStyle("-fx-font: 50px Courier;");
 
         Button bSearch = new Button("Search");
         bSearch.setPrefSize(100, 50);
+        bSearch.setStyle("-fx-font: 15px Courier;");
 
         Button bProfile = new Button("Profile");
         bProfile.setPrefSize(100, 50);
+        bProfile.setStyle("-fx-font: 15px Courier;");
 
         Button bSavedBooks = new Button("My Library");
         bSavedBooks.setPrefSize(100, 50);
+        bSavedBooks.setStyle("-fx-font: 15px Courier;");
 
         Button bLogout = new Button("Logout");
         bLogout.setPrefSize(100, 50);
+        bLogout.setStyle("-fx-font: 15px Courier;");
 
         
         Search test = new Search(user);
@@ -78,6 +82,18 @@ public class MainApp extends Application {
         ImageView bookIcon = new ImageView(new Image("resources/icon.png"));
         bookIcon.setFitHeight(150);
         bookIcon.setFitWidth(150);
+
+        ImageView column1 = new ImageView(new Image("resources/bm1.jpg"));
+        column1.setFitHeight(400);
+        column1.setFitWidth(150);
+        VBox column1Box = new VBox(column1);
+        column1Box.setAlignment(Pos.CENTER);
+
+        ImageView column2 = new ImageView(new Image("resources/bm1.jpg"));
+        column2.setFitHeight(400);
+        column2.setFitWidth(150);
+        VBox column2Box = new VBox(column2);
+        column2Box.setAlignment(Pos.CENTER);
 
         Random rand = new Random();
         int max = 28;
@@ -118,6 +134,7 @@ public class MainApp extends Application {
         coverBox.setSpacing(10);
         coverBox.getChildren().addAll(coverImageView1, coverImageView2, coverImageView3, coverImageView4, coverImageView5);
         coverBox.setAlignment(Pos.CENTER);
+        coverBox.setStyle("-fx-background-color: #a5ab98;");
 
 
         VBox vbox = new VBox();
@@ -136,6 +153,8 @@ public class MainApp extends Application {
         newPane.setCenter(hbox);
         newPane.setTop(vbox);
         newPane.setBottom(coverBox);
+        newPane.setRight(column1Box);
+        newPane.setLeft(column2Box);
 
         return new Scene(newPane, 1200, 800);
     }
