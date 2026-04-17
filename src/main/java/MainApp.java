@@ -54,18 +54,30 @@ public class MainApp extends Application {
         newPane.setStyle("-fx-background-color: CCD4BC;");
 
         Label l = new Label("Welcome, " + user.getUsername() + "!");
+        l.setStyle("-fx-font: 50px Tahoma;");
 
         Button bSearch = new Button("Search");
-        Button bProfile = new Button("Profile");
-        Button bSavedBooks = new Button("My Library");
-        Button bLogout = new Button("Logout");
+        bSearch.setPrefSize(100, 50);
 
+        Button bProfile = new Button("Profile");
+        bProfile.setPrefSize(100, 50);
+
+        Button bSavedBooks = new Button("My Library");
+        bSavedBooks.setPrefSize(100, 50);
+
+        Button bLogout = new Button("Logout");
+        bLogout.setPrefSize(100, 50);
+
+        
         Search test = new Search(user);
-        SavedBooks test2 = new SavedBooks(user);
         bSearch.setOnAction(e -> primaryStage.setScene(test.createSearchScene()));        
         bProfile.setOnAction(e -> primaryStage.setScene(new Profile().createProfileScene()));
         bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks(user).createSavedBooksScene()));
         bLogout.setOnAction(e -> primaryStage.setScene(createLoginScene()));
+
+        ImageView bookIcon = new ImageView(new Image("resources/icon.png"));
+        bookIcon.setFitHeight(150);
+        bookIcon.setFitWidth(150);
 
         Random rand = new Random();
         int max = 28;
@@ -114,6 +126,12 @@ public class MainApp extends Application {
         vbox.getChildren().addAll(l);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: #a5ab98;");
+
+        VBox icon = new VBox();
+        vbox.setPadding(new Insets(10));
+        vbox.setSpacing(8);
+        vbox.getChildren().addAll(bookIcon);
+        hbox.getChildren().add(icon);
 
         newPane.setCenter(hbox);
         newPane.setTop(vbox);
