@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -9,7 +11,13 @@ import javafx.scene.control.TextField;
 import model.User;
 import service.Authentication;
 import database.UserRepo;
+
+import java.io.File;
+import java.util.Random;
+
 import database.DatabaseManager;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class MainApp extends Application {
 
@@ -42,36 +50,99 @@ public class MainApp extends Application {
 
     public Scene createMainScene(User user) {
         this.currentUser = user;
-        Pane newPane = new Pane();
-        newPane.setStyle("-fx-background-color: grey;");
+        BorderPane newPane = new BorderPane();
+        newPane.setStyle("-fx-background-color: CCD4BC;");
 
         Label l = new Label("Welcome, " + user.getUsername() + "!");
+        l.setStyle("-fx-font: 50px Tahoma;");
 
         Button bSearch = new Button("Search");
-        Button bProfile = new Button("Profile");
-        Button bSavedBooks = new Button("Saved Books");
-        Button bLogout = new Button("Logout");
+        bSearch.setPrefSize(100, 50);
 
+        Button bProfile = new Button("Profile");
+        bProfile.setPrefSize(100, 50);
+
+        Button bSavedBooks = new Button("My Library");
+        bSavedBooks.setPrefSize(100, 50);
+
+        Button bLogout = new Button("Logout");
+        bLogout.setPrefSize(100, 50);
+
+        
         Search test = new Search(user);
-        SavedBooks test2 = new SavedBooks(user);
         bSearch.setOnAction(e -> primaryStage.setScene(test.createSearchScene()));        
         bProfile.setOnAction(e -> primaryStage.setScene(new Profile().createProfileScene()));
         bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks(user).createSavedBooksScene()));
         bLogout.setOnAction(e -> primaryStage.setScene(createLoginScene()));
 
-        l.setLayoutX(200);           l.setLayoutY(20);
-        bSearch.setLayoutX(200);     bSearch.setLayoutY(150);
-        bProfile.setLayoutX(200);    bProfile.setLayoutY(180);
-        bSavedBooks.setLayoutX(200); bSavedBooks.setLayoutY(210);
-        bLogout.setLayoutX(200);     bLogout.setLayoutY(250);
+        ImageView bookIcon = new ImageView(new Image("resources/icon.png"));
+        bookIcon.setFitHeight(150);
+        bookIcon.setFitWidth(150);
 
-        newPane.getChildren().addAll(l, bSearch, bProfile, bSavedBooks, bLogout);
-        return new Scene(newPane, 600, 400);
+        Random rand = new Random();
+        int max = 28;
+        int randomNum = rand.nextInt(max) + 1;
+
+        ImageView coverImageView1 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
+        coverImageView1.setFitHeight(150);
+        coverImageView1.setFitWidth(100);
+        randomNum = rand.nextInt(max) + 1;
+
+        ImageView coverImageView2 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
+        coverImageView2.setFitHeight(150);
+        coverImageView2.setFitWidth(100);
+        randomNum = rand.nextInt(max) + 1; 
+
+        ImageView coverImageView3 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
+        coverImageView3.setFitHeight(150);
+        coverImageView3.setFitWidth(100);
+        randomNum = rand.nextInt(max) + 1; 
+
+        ImageView coverImageView4 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
+        coverImageView4.setFitHeight(150);
+        coverImageView4.setFitWidth(100);
+        randomNum = rand.nextInt(max) + 1; 
+
+        ImageView coverImageView5 = new ImageView(new Image("covers/" + randomNum + ".jpg"));
+        coverImageView5.setFitHeight(150);
+        coverImageView5.setFitWidth(100);
+
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);
+        hbox.getChildren().addAll(bSearch, bProfile, bSavedBooks, bLogout);
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setStyle("-fx-background-color: #CCD4BC;");
+
+        HBox coverBox = new HBox();
+        coverBox.setSpacing(10);
+        coverBox.getChildren().addAll(coverImageView1, coverImageView2, coverImageView3, coverImageView4, coverImageView5);
+        coverBox.setAlignment(Pos.CENTER);
+
+
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10));
+        vbox.setSpacing(8);
+        vbox.getChildren().addAll(l);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setStyle("-fx-background-color: #a5ab98;");
+
+        VBox icon = new VBox();
+        vbox.setPadding(new Insets(10));
+        vbox.setSpacing(8);
+        vbox.getChildren().addAll(bookIcon);
+        hbox.getChildren().add(icon);
+
+        newPane.setCenter(hbox);
+        newPane.setTop(vbox);
+        newPane.setBottom(coverBox);
+
+        return new Scene(newPane, 1200, 800);
     }
 
     public Scene createLoginScene() {
-        Pane p = new Pane();
-        p.setStyle("-fx-background-color: grey;");
+        BorderPane p = new BorderPane();
+        p.setStyle("-fx-background-color: CCD4BC;");
         Label l = new Label("Welcome! Please enter username and password.\nPress 'Register' if you don't have an account.");
         TextField usernameTF = new TextField();
         PasswordField passwordTF = new PasswordField();
@@ -96,13 +167,31 @@ public class MainApp extends Application {
             }
         });
 
-        l.setLayoutX(200);           l.setLayoutY(0);
-        usernameTF.setLayoutX(200);  usernameTF.setLayoutY(150);
-        passwordTF.setLayoutX(200);  passwordTF.setLayoutY(175);
-        bLogin.setLayoutX(200);      bLogin.setLayoutY(210);
-        bRegister.setLayoutX(260);   bRegister.setLayoutY(210);
 
-        p.getChildren().addAll(l, usernameTF, passwordTF, bLogin, bRegister);
-        return new Scene(p, 600, 400);
+
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10,10,15,12));
+        vbox.setSpacing(15);
+        vbox.getChildren().addAll(usernameTF, passwordTF, bLogin, bRegister);
+        vbox.setPrefWidth(150);
+        bLogin.setMinWidth(vbox.getPrefWidth());
+        bRegister.setMinWidth(vbox.getPrefWidth());
+        usernameTF.setMaxWidth(vbox.getPrefWidth());
+        passwordTF.setMaxWidth(vbox.getPrefWidth());
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setStyle("-fx-background-color: #CCD4BC;");
+
+
+
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 10, 15, 12));
+        hbox.setSpacing(10);
+        hbox.getChildren().addAll(l);
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setStyle("-fx-background-color: #a5ab98;");
+
+        p.setCenter(vbox);
+        p.setTop(hbox);
+        return new Scene(p, 1200, 800);
     }
 }
