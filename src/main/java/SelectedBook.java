@@ -26,7 +26,7 @@ public class SelectedBook {
         this.userBooksRepo = new UserBooksRepo();
     }
     
-    public Scene CreateSelectScene(){
+    public Scene CreateSelectScene(Boolean genreSearch){
         int id = Integer.parseInt(book.getId());
         BorderPane newPane = new BorderPane();
         newPane.setStyle("-fx-background-color: grey;");
@@ -41,7 +41,7 @@ public class SelectedBook {
 
         readButton.setOnAction(e -> {
             Stage stage = (Stage) readButton.getScene().getWindow();
-            stage.setScene(createReaderScene(stage, id, book.getTitle()));
+            stage.setScene(createReaderScene(stage, id, book.getTitle(), genreSearch));
         });
 
         addToLibButton.setOnAction(e -> {
@@ -53,9 +53,15 @@ public class SelectedBook {
         });
 
         returnButton.setOnAction(e -> {
-            Stage stage = (Stage) returnButton.getScene().getWindow();
-            Search test = new Search(user);
-            stage.setScene(test.createResultsScene(results));
+            if (genreSearch == true){
+                Stage stage = (Stage) returnButton.getScene().getWindow();
+                Search test = new Search(user);
+                stage.setScene(test.createGenreResultsScene(results));
+            }else{
+                Stage stage = (Stage) returnButton.getScene().getWindow();
+                Search test = new Search(user);
+                stage.setScene(test.createResultsScene(results));
+            }
         });
 
         //new layout style, havent tested yet
@@ -72,11 +78,11 @@ public class SelectedBook {
         newPane.setBottom(hbox);
         newPane.setCenter(vbox);
         
-        Scene SelectScene = new Scene(newPane, 600, 400);
+        Scene SelectScene = new Scene(newPane, 1200, 800);
         return SelectScene; 
     }
 
-    private Scene createReaderScene(Stage stage, int gutenbergId, String bookTitle) {
+    private Scene createReaderScene(Stage stage, int gutenbergId, String bookTitle, Boolean genreSearch) {
         Pane pane = new Pane();
 
         javafx.scene.web.WebView webView = new javafx.scene.web.WebView();
@@ -92,7 +98,7 @@ public class SelectedBook {
         bBack.setLayoutX(480);     bBack.setLayoutY(10);
 
         //update to go back to search
-        bBack.setOnAction(e -> stage.setScene(CreateSelectScene()));
+        bBack.setOnAction(e -> stage.setScene(CreateSelectScene(genreSearch)));
 
         pane.getChildren().addAll(titleLabel, bBack, webView);
         return new Scene(pane, 600, 400);
