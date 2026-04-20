@@ -273,4 +273,51 @@ public class Search {
         Scene ResultsScene = new Scene(newPane, 600, 400);
         return ResultsScene;
     }
+
+    public Scene createGenreScene(List<Book> books){
+        BorderPane newPane = new BorderPane();
+        Button scifi = new Button("Science Fiction");
+        Button adventure = new Button("Adventure");
+        Button history = new Button("History");
+        Button poetry = new Button("Poetry");
+        Button mystery = new Button("Mystery");
+        Button fantasy = new Button("Fantasy");
+
+        scifi.setOnAction(e -> {
+
+        });
+
+        adventure.setOnAction(e -> {
+            
+        });
+
+        history.setOnAction(e -> {
+            
+        });
+
+        poetry.setOnAction(e -> {
+            
+        });
+
+        mystery.setOnAction(e -> {
+            
+        });
+
+        fantasy.setOnAction(e -> {
+            
+        });
+
+        Button bBack = new Button("Back");
+
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10));
+        vbox.setSpacing(8);
+        vbox.getChildren().addAll(scifi, adventure, history, poetry, mystery, fantasy);
+        vbox.setAlignment(Pos.CENTER);
+
+        newPane.setCenter(vbox);
+
+        Scene GenreScene = new Scene(newPane, 600, 400);
+        return GenreScene;
+    }
 }
