@@ -11,15 +11,20 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import database.UserBooksRepo;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.User;
 
-public class Search {
+public class Search{
     private final User user;
 
     public Search(User user) {
@@ -33,7 +38,7 @@ public class Search {
         TextField searchTF = new TextField();
         Button bSearchTitle = new Button("Search by Title");
         Button bSearchAuth = new Button("Search by Author");
-        Button bSearchGenre = new Button("Search by Genre");
+        Button bSearchGenre = new Button("Browse by Genre");
         Button bBack = new Button("Back");
         bBack.setOnAction(e -> {
             Stage stage = (Stage) bSearchTitle.getScene().getWindow();
@@ -131,29 +136,7 @@ public class Search {
             //gets all books from CSV and puts them in beans with getters for various fields
             CsvToBean<Book> csvReader = new CsvToBeanBuilder(reader).withType(Book.class).withSeparator(',').withIgnoreLeadingWhiteSpace(true).withIgnoreEmptyLine(true).build();
             List<Book> books = csvReader.parse();
-
-            //parses csv list 1st for substrings
-            for (Book book : books){
-                String genres = book.getSubjects();
-                if (genres.toUpperCase().contains(searchTF.getText().toUpperCase())){
-                    if (results.size() < 5){
-                        results.add(book);
-                    }
-                }
-            }
-            //2nd parse is for similar strings
-            if (results.size() < 5);
-                for (Book book : books){
-                    String genres = book.getSubjects();
-                    LevenshteinDistance distance = LevenshteinDistance.getDefaultInstance();
-                    int result = distance.apply(genres,searchTF.getText());
-                    if (result <= 1){
-                        if (results.size() <= 5){
-                            results.add(book);
-                        }
-                    }
-                }
-
+            
             Stage stage = (Stage) bSearchTitle.getScene().getWindow();
             stage.setScene(createResultsScene(results));
 
@@ -291,3 +274,50 @@ public class Search {
         return ResultsScene;
     }
 }
+
+    public Scene createGenreScene(List<Book> books){
+        BorderPane newPane = new BorderPane();
+        Button scifi = new Button("Science Fiction");
+        Button adventure = new Button("Adventure");
+        Button history = new Button("History");
+        Button poetry = new Button("Poetry");
+        Button mystery = new Button("Mystery");
+        Button fantasy = new Button("Fantasy");
+
+        scifi.setOnAction(e -> {
+
+        });
+
+        adventure.setOnAction(e -> {
+            
+        });
+
+        history.setOnAction(e -> {
+            
+        });
+
+        poetry.setOnAction(e -> {
+            
+        });
+
+        mystery.setOnAction(e -> {
+            
+        });
+
+        fantasy.setOnAction(e -> {
+            
+        });
+
+        Button bBack = new Button("Back");
+
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10));
+        vbox.setSpacing(8);
+        vbox.getChildren().addAll(scifi, adventure, history, poetry, mystery, fantasy);
+        vbox.setAlignment(Pos.CENTER);
+
+        newPane.setCenter(vbox);
+
+        Scene GenreScene = new Scene(newPane, 600, 400);
+        return GenreScene;
+    }
