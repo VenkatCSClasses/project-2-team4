@@ -51,7 +51,7 @@ public class MainApp extends Application {
     public Scene createMainScene(User user) {
         this.currentUser = user;
         BorderPane newPane = new BorderPane();
-        newPane.setStyle("-fx-background-color: CCD4BC;");
+        // newPane.setStyle("-fx-background-color: CCD4BC;");
 
         Label l = new Label("Welcome, " + user.getUsername() + "!");
         l.setStyle("-fx-font: 50px Tahoma;");
@@ -112,7 +112,7 @@ public class MainApp extends Application {
         hbox.setSpacing(10);
         hbox.getChildren().addAll(bSearch, bProfile, bSavedBooks, bLogout);
         hbox.setAlignment(Pos.CENTER);
-        hbox.setStyle("-fx-background-color: #CCD4BC;");
+        //hbox.setStyle("-fx-background-color: #CCD4BC;");
 
         HBox coverBox = new HBox();
         coverBox.setSpacing(10);
@@ -125,7 +125,7 @@ public class MainApp extends Application {
         vbox.setSpacing(8);
         vbox.getChildren().addAll(l);
         vbox.setAlignment(Pos.CENTER);
-        vbox.setStyle("-fx-background-color: #a5ab98;");
+        //vbox.setStyle("-fx-background-color: #a5ab98;");
 
         VBox icon = new VBox();
         vbox.setPadding(new Insets(10));
@@ -137,12 +137,15 @@ public class MainApp extends Application {
         newPane.setTop(vbox);
         newPane.setBottom(coverBox);
 
-        return new Scene(newPane, 1200, 800);
+        Scene scene = new Scene(newPane, 1200, 800);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        return scene;
+
     }
 
     public Scene createLoginScene() {
         BorderPane p = new BorderPane();
-        p.setStyle("-fx-background-color: CCD4BC;");
+        //p.setStyle("-fx-background-color: CCD4BC;");
         Label l = new Label("Welcome! Please enter username and password.\nPress 'Register' if you don't have an account.");
         TextField usernameTF = new TextField();
         PasswordField passwordTF = new PasswordField();
@@ -179,7 +182,7 @@ public class MainApp extends Application {
         usernameTF.setMaxWidth(vbox.getPrefWidth());
         passwordTF.setMaxWidth(vbox.getPrefWidth());
         vbox.setAlignment(Pos.CENTER);
-        vbox.setStyle("-fx-background-color: #CCD4BC;");
+       //vbox.setStyle("-fx-background-color: #CCD4BC;");
 
 
 
@@ -188,10 +191,14 @@ public class MainApp extends Application {
         hbox.setSpacing(10);
         hbox.getChildren().addAll(l);
         hbox.setAlignment(Pos.CENTER);
-        hbox.setStyle("-fx-background-color: #a5ab98;");
+        //hbox.setStyle("-fx-background-color: #a5ab98;");
 
         p.setCenter(vbox);
         p.setTop(hbox);
-        return new Scene(p, 1200, 800);
+
+        Scene scene = new Scene(p, 1200, 800);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        return scene;
+
     }
 }

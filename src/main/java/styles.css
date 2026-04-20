@@ -1,3 +1,78 @@
+.root {
+    -fx-background-color: #CCD4BC;
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 13px;
+}
+
 .label {
-    -fx-text-fill: #e2e8f0;
+    -fx-text-fill: #2d3a1e;
+}
+    
+.text-field,
+.password-field {
+    -fx-background-color: #eef2e8;
+    -fx-text-fill: #2d3a1e;
+    -fx-prompt-text-fill: #8a9a78;
+    -fx-border-color: #a5ab98;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 12 8 12;
+}
+
+.text-field:focused,
+.password-field:focused {
+    -fx-border-color: #5a7a3a;
+}
+
+.button {
+    -fx-background-color: #a5ab98;
+    -fx-text-fill: #2d3a1e;
+    -fx-border-color: #8a9a78;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #8a9a78;
+    -fx-text-fill: #ffffff;
+}
+
+.button-primary {
+    -fx-background-color: #5a7a3a;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: transparent;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+}
+
+.button-primary:hover {
+    -fx-background-color: #6b8f45;
+}
+
+.scroll-pane,
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2d3a1e;
+}
+
+.list-cell:selected {
+    -fx-background-color: #a5ab98;
+}
+
+.separator .line {
+    -fx-border-color: #a5ab98;
 }
