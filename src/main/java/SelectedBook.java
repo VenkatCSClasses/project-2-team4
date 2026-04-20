@@ -101,13 +101,14 @@ public class SelectedBook {
 
             Label titleLabel = new Label(bookTitle);
             Button bBack = new Button("Back to Search");
-
-            titleLabel.setLayoutX(10); titleLabel.setLayoutY(10);
-            bBack.setLayoutX(480);     bBack.setLayoutY(10);
+            HBox topHolder = new HBox(titleLabel, bBack);
+            topHolder.setSpacing(10);
+            topHolder.setAlignment(Pos.CENTER);
 
             bBack.setOnAction(e -> stage.setScene(CreateSelectScene(genreSearch)));
 
-            pane.getChildren().addAll(titleLabel, bBack, webView);
+            pane.setCenter(webView);
+            pane.setTop(topHolder);
 
             Scene readerScene = new Scene(pane, 1200, 800);
             readerScene.getStylesheets().add("styles.css");
