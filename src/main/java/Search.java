@@ -284,7 +284,17 @@ public class Search {
         Button fantasy = new Button("Fantasy");
 
         scifi.setOnAction(e -> {
+            ArrayList<Book> results = new ArrayList<>();
+            for (Book book : books){
+                String subjects = book.getSubjects();
+                if (subjects.toUpperCase().contains("SCIENCE FICTION")){
+                    if (results.size() < 15){
+                        results.add(book);
+                    }
+                }
+            }
 
+            
         });
 
         adventure.setOnAction(e -> {
@@ -317,6 +327,12 @@ public class Search {
 
         newPane.setCenter(vbox);
 
+        Scene GenreScene = new Scene(newPane, 600, 400);
+        return GenreScene;
+    }
+
+    public Scene createGenreResultsScene(ArrayList<Book> results){
+        BorderPane newPane = new BorderPane();
         Scene GenreScene = new Scene(newPane, 600, 400);
         return GenreScene;
     }
