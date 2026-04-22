@@ -36,12 +36,11 @@ public class SelectedBook {
         
         int id = Integer.parseInt(book.getId());
         BorderPane newPane = new BorderPane();
-        newPane.setStyle("-fx-background-color: grey;");
         Label titleLabel = new Label(book.getTitle());
-        Label authLabel = new Label(book.getAuthors());
-        Label subLabel = new Label(book.getSubjects());
-        Label idLabel = new Label(book.getId());
-        Label langLabel = new Label(book.getLanguage());
+        Label authLabel = new Label("Author(s): " + book.getAuthors());
+        Label subLabel = new Label("Genre(s): " + book.getSubjects());
+        Label idLabel = new Label("Gutenberg ID: " + book.getId());
+        Label langLabel = new Label("Language: " + book.getLanguage());
         Button readButton = new Button("Read This Book");
         Button addToLibButton = new Button("Add This Book to Your Library");
         Button returnButton = new Button("Return to Search");
@@ -71,21 +70,23 @@ public class SelectedBook {
             }
         });
 
-        //new layout style, havent tested yet
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
         hbox.setSpacing(10);
         hbox.getChildren().addAll(readButton, addToLibButton, returnButton);
+        hbox.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10));
         vbox.setSpacing(8);
         vbox.getChildren().addAll(titleLabel,authLabel,subLabel,idLabel,langLabel);
+        vbox.setAlignment(Pos.CENTER);
 
         newPane.setBottom(hbox);
         newPane.setCenter(vbox);
         
         Scene SelectScene = new Scene(newPane, 1200, 800);
+        SelectScene.getStylesheets().add("styles.css");
         return SelectScene; 
     }
 
