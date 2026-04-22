@@ -1,16 +1,19 @@
 import javafx.animation.PauseTransition;
 import javafx.concurrent.Worker;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.User;
 import database.UserBooksRepo;
 import java.util.*;
+import javafx.scene.layout.Priority;
 
 public class SavedBooks {
 
@@ -24,7 +27,7 @@ public class SavedBooks {
 
     public Scene createSavedBooksScene() {
         Pane newPane = new Pane();
-        newPane.setStyle("-fx-background-color: grey;");
+       // newPane.setStyle("-fx-background-color: grey;");
 
         Label title = new Label("My Saved Books — " + user.getUsername());
         Label statusLabel = new Label();
@@ -44,45 +47,72 @@ public class SavedBooks {
         loadBooks(newPane, statusLabel);
 
         newPane.getChildren().addAll(title, bBack, statusLabel);
-        return new Scene(newPane, 600, 400);
+        Scene savedBooksScene = new Scene(newPane, 1200, 800);
+        savedBooksScene.getStylesheets().add("styles.css");
+        return savedBooksScene;
     }
 
     private void loadBooks(Pane pane, Label statusLabel) {
+        VBox mainBox = new VBox();
+        mainBox.setPadding(new Insets(20));
+        mainBox.setSpacing(12);
+        mainBox.setAlignment(Pos.CENTER);
+        //List<Label> lList = new ArrayList<>();
+        
+
         try {
             List<Map<String, String>> books = 
                 userBooksRepo.getBooksForUser(user.getId());
 
             if (books.isEmpty()) {
                 Label empty = new Label("No saved books yet — search for books to add!");
-                empty.setLayoutX(150);
-                empty.setLayoutY(150);
-                pane.getChildren().add(empty);
+                // empty.setLayoutX(150);
+                // empty.setLayoutY(150);
+                mainBox.getChildren().add(empty);
+                pane.getChildren().add(mainBox);
                 return;
             }
 
-            for (int i = 0; i < books.size(); i++) {
-                Map<String, String> book = books.get(i);
-                int yPos = 40 + (i * 40);
-
+            //for (int i = 0; i < books.size(); i++) {
+            for (Map<String, String> book : books) {
+                // Create the Book Label with title, author, and status
                 Label bookLabel = new Label(
                     book.get("title") + " — " + book.get("author") +
                     "  [" + book.get("status") + "]"
                 );
+                // Allow the label to expand horizontally and push buttons to the right
+                bookLabel.setMaxWidth(Double.MAX_VALUE);
+                HBox.setHgrow(bookLabel, Priority.ALWAYS);
+
                 Button bRead   = new Button("Read");
                 Button bStatus = new Button("Update Status");
                 Button bRemove = new Button("Remove");
 
-                bookLabel.setLayoutX(10);  bookLabel.setLayoutY(yPos);
-                bRead.setLayoutX(350);     bRead.setLayoutY(yPos);
-                bStatus.setLayoutX(400);   bStatus.setLayoutY(yPos);
-                bRemove.setLayoutX(490);   bRemove.setLayoutY(yPos);
+                // bookLabel.setLayoutX(10);  bookLabel.setLayoutY(yPos);
+                // bRead.setLayoutX(500);     bRead.setLayoutY(yPos);
+                // bStatus.setLayoutX(570);   bStatus.setLayoutY(yPos);
+                // bRemove.setLayoutX(690);   bRemove.setLayoutY(yPos);
+
+                // HBox to hold the label and buttons on the same row
+                HBox row = new HBox(15, bookLabel, bRead, bStatus, bRemove);
+                row.setAlignment(Pos.CENTER_LEFT);
+                row.setPadding(new Insets(8, 12, 8, 12));
 
                 int gutId = Integer.parseInt(book.get("gutenberg_id"));
                 String bookTitle = book.get("title");
 
                 bRead.setOnAction(e -> {
-                    Stage stage = (Stage) bRead.getScene().getWindow();
-                    stage.setScene(createReaderScene(stage, gutId, bookTitle));
+                    try {
+                        String current = book.get("status");
+                        if (current.equals("NOT_STARTED")) {
+                            userBooksRepo.updateStatus(user.getId(), gutId, "IN_PROGRESS");
+                        }
+                        Stage stage = (Stage) bRead.getScene().getWindow();
+                        stage.setScene(createReaderScene(stage, gutId, bookTitle));
+                    } catch (Exception ex) {
+                        statusLabel.setText("Error: " + ex.getMessage());
+                    }
+                    //stage.setScene(createReaderScene(stage, gutId, bookTitle));
                 });
 
                 bRemove.setOnAction(e -> {
@@ -111,8 +141,10 @@ public class SavedBooks {
                     }
                 });
 
-                pane.getChildren().addAll(bookLabel, bRead, bStatus, bRemove);
+                //pane.getChildren().addAll(bookLabel, bRead, bStatus, bRemove);
+                mainBox.getChildren().add(row);
             }
+            pane.getChildren().add(mainBox);
 
         } catch (Exception e) {
             statusLabel.setText("Failed to load books: " + e.getMessage());
@@ -142,11 +174,13 @@ public class SavedBooks {
                 pane.setCenter(buttons);
             }
         });
-        webView.getEngine().load("https://www.gutenberg.org/cache/epub/" + gutenbergId + "/pg" + gutenbergId + "-images.html");
+        //webView.getEngine().load("https://www.gutenberg.org/cache/epub/" + gutenbergId + "/pg" + gutenbergId + "-images.html");
         webView.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            System.out.println("State: " + newState);
             if (newState == Worker.State.RUNNING){
                 timeout.playFromStart();
             }else if (newState == Worker.State.FAILED) {
+                System.out.println("FAILED");
                 timeout.stop();
                 Label errorLabel = new Label("Book could not be read. Please check your internet connection and try again.");
                 Button bBack = new Button("Back to Library");
@@ -159,13 +193,14 @@ public class SavedBooks {
                 pane.setTop(errorLabel);
                 pane.setCenter(buttons);
             }else if (newState == Worker.State.SUCCEEDED){
+                System.out.println("SUCCEEDED");
                 timeout.stop();
-                webView.setPrefSize(600, 360);
-                webView.setLayoutX(0);
-                webView.setLayoutY(40);
+                // webView.setPrefSize(600, 360);
+                // webView.setLayoutX(0);
+                // webView.setLayoutY(40);
 
                 Label titleLabel = new Label(bookTitle);
-                Button bBack = new Button("Back to Search");
+                Button bBack = new Button("Back to Library");
                 HBox topHolder = new HBox(titleLabel, bBack);
                 topHolder.setSpacing(10);
                 topHolder.setAlignment(Pos.CENTER);
@@ -179,6 +214,7 @@ public class SavedBooks {
         });
         Scene readerScene = new Scene(pane, 1200, 800);
         readerScene.getStylesheets().add("styles.css");
+        webView.getEngine().load("https://www.gutenberg.org/cache/epub/" + gutenbergId + "/pg" + gutenbergId + "-images.html");
         return readerScene;
     }
 }
