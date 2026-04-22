@@ -272,7 +272,11 @@ public class Search {
         });
 
         newPane.getChildren().addAll(bk1, bk2, bk3, bk4, bk5, bBook1, bBook2, bBook3, bBook4, bBook5, bBack);
+       
+    
+        
         Scene ResultsScene = new Scene(newPane, 1200, 800);
+        ResultsScene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         return ResultsScene;
     }
 
