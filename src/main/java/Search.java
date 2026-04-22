@@ -296,7 +296,6 @@ public class Search {
                     }
                 }
             }
-            System.out.println(results.isEmpty());
             Stage stage = (Stage) scifi.getScene().getWindow();
             stage.setScene(createGenreResultsScene(results));
         
