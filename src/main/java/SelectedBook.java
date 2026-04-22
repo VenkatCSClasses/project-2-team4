@@ -93,20 +93,41 @@ public class SelectedBook {
         BorderPane pane = new BorderPane();
 
         javafx.scene.web.WebView webView = new javafx.scene.web.WebView();
-        webView.getEngine().load("https://www.gutenberg.org/cache/epub/" + gutenbergId + "/pg" + gutenbergId + "-images.html");
-        webView.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
-            if (newState == Worker.State.FAILED) {
-                // Handle "No Internet" or "Connection Failed" here
+        Worker<Void> worker = webView.getEngine().getLoadWorker();
+
+        // Create a 10-second timeout timer
+        PauseTransition timeout = new PauseTransition(Duration.seconds(10));
+        timeout.setOnFinished(e -> {
+            if (worker.isRunning()) {
+                worker.cancel();
                 Label errorLabel = new Label("Book could not be read. Please check your internet connection and try again.");
                 Button bBack = new Button("Back to Search");
-                Button retryRead = new Button("Try Again");
+                bBack.setOnAction(f -> stage.setScene(CreateSelectScene(genreSearch)));
                 
-                HBox buttons = new HBox(bBack,retryRead);
+                HBox buttons = new HBox(bBack);
+                buttons.setAlignment(Pos.CENTER);
+
+                pane.setTop(errorLabel);
+                pane.setCenter(buttons);
+            }
+        });
+        webView.getEngine().load("https://www.gutenberg.org/cache/epub/" + gutenbergId + "/pg" + gutenbergId + "-images.html");
+        webView.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == Worker.State.RUNNING){
+                timeout.playFromStart();
+            }else if (newState == Worker.State.FAILED) {
+                timeout.stop();
+                Label errorLabel = new Label("Book could not be read. Please check your internet connection and try again.");
+                Button bBack = new Button("Back to Search");
+                bBack.setOnAction(f -> stage.setScene(CreateSelectScene(genreSearch)));
+                
+                HBox buttons = new HBox(bBack);
                 buttons.setAlignment(Pos.CENTER);
 
                 pane.setTop(errorLabel);
                 pane.setCenter(buttons);
             }else if (newState == Worker.State.SUCCEEDED){
+                timeout.stop();
                 webView.setPrefSize(600, 360);
                 webView.setLayoutX(0);
                 webView.setLayoutY(40);
