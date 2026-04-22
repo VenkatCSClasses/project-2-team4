@@ -93,42 +93,41 @@ public class SelectedBook {
         BorderPane pane = new BorderPane();
 
         javafx.scene.web.WebView webView = new javafx.scene.web.WebView();
-        try {
-            webView.getEngine().load("https://www.gutenberg.org/cache/epub/" + gutenbergId + "/pg" + gutenbergId + "-images.html");
-            webView.setPrefSize(600, 360);
-            webView.setLayoutX(0);
-            webView.setLayoutY(40);
+        webView.getEngine().load("https://www.gutenberg.org/cache/epub/" + gutenbergId + "/pg" + gutenbergId + "-images.html");
+        webView.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == Worker.State.FAILED) {
+                // Handle "No Internet" or "Connection Failed" here
+                Label errorLabel = new Label("Book could not be read. Please check your internet connection and try again.");
+                Button bBack = new Button("Back to Search");
+                Button retryRead = new Button("Try Again");
+                
+                HBox buttons = new HBox(bBack,retryRead);
+                buttons.setAlignment(Pos.CENTER);
 
-            Label titleLabel = new Label(bookTitle);
-            Button bBack = new Button("Back to Search");
-            HBox topHolder = new HBox(titleLabel, bBack);
-            topHolder.setSpacing(10);
-            topHolder.setAlignment(Pos.CENTER);
+                pane.setTop(errorLabel);
+                pane.setCenter(buttons);
+            }else if (newState == Worker.State.SUCCEEDED){
+                webView.setPrefSize(600, 360);
+                webView.setLayoutX(0);
+                webView.setLayoutY(40);
 
-            bBack.setOnAction(e -> stage.setScene(CreateSelectScene(genreSearch)));
+                Label titleLabel = new Label(bookTitle);
+                Button bBack = new Button("Back to Search");
+                HBox topHolder = new HBox(titleLabel, bBack);
+                topHolder.setSpacing(10);
+                topHolder.setAlignment(Pos.CENTER);
 
-            pane.setCenter(webView);
-            pane.setTop(topHolder);
+                bBack.setOnAction(e -> stage.setScene(CreateSelectScene(genreSearch)));
 
-            Scene readerScene = new Scene(pane, 1200, 800);
-            readerScene.getStylesheets().add("styles.css");
-            return readerScene;
-        } catch (Exception e) {
-            Label errorLabel = new Label("Book could not be read. Please check your internet connection and try again.");
-            Button bBack = new Button("Back to Search");
-            Button retryRead = new Button("Try Again");
-            
-            HBox buttons = new HBox(bBack,retryRead);
-            buttons.setAlignment(Pos.CENTER);
-
-            pane.setTop(errorLabel);
-            pane.setCenter(buttons);
-
-            Scene errorScene = new Scene(pane, 1200, 800);
-            errorScene.getStylesheets().add("styles.css");
-            return errorScene;
-            
-        }
-        
+                pane.setCenter(webView);
+                pane.setTop(topHolder);
+            }
+        });
+        Scene readerScene = new Scene(pane, 1200, 800);
+        readerScene.getStylesheets().add("styles.css");
+        return readerScene;
     }
+
+
+
 }
