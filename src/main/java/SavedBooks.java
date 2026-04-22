@@ -133,6 +133,9 @@ public class SavedBooks {
             new SavedBooks(user).createSavedBooksScene()));
 
         pane.getChildren().addAll(titleLabel, bBack, webView);
-        return new Scene(pane, 600, 400);
+        
+        Scene scene = new Scene(pane, 1200, 800);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        return scene;
     }
 }

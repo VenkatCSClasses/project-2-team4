@@ -193,6 +193,7 @@ public class Search {
         newPane.getChildren().add(searchTF);
         newPane.getChildren().add(bBack);
         Scene SearchScene = new Scene(newPane, 600, 400);
+        SearchScene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         return SearchScene;
     }
 
@@ -287,7 +288,9 @@ public class Search {
         });
 
         newPane.getChildren().addAll(bk1, bk2, bk3, bk4, bk5, bBook1, bBook2, bBook3, bBook4, bBook5, bBack);
-        Scene ResultsScene = new Scene(newPane, 600, 400);
-        return ResultsScene;
+       
+        Scene scene = new Scene(newPane, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        return scene;
     }
 }
