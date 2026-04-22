@@ -11,3 +11,6 @@ Use Case Diagram:
 
 Product Backlog:
 https://docs.google.com/document/d/1S9wM5b76LGXwzVOFlHN9EMhisN919FD_ku9UxcKVPKM/edit?usp=sharing 
+
+Scrum Diary:
+https://docs.google.com/document/d/1ojr-jXbMHN2DDmy5UyXlCafpM6ZRrjb3gz6IDgujaJE/edit?tab=t.0
