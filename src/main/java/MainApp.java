@@ -44,24 +44,24 @@ public class MainApp extends Application {
         Label l = new Label("Welcome, " + user.getUsername() + "!");
 
         Button bSearch = new Button("Search");
-        Button bProfile = new Button("Profile");
+       // Button bProfile = new Button("Profile");
         Button bSavedBooks = new Button("Saved Books");
         Button bLogout = new Button("Logout");
 
         Search test = new Search(user);
         SavedBooks test2 = new SavedBooks(user, null);
         bSearch.setOnAction(e -> primaryStage.setScene(test.createSearchScene()));        
-        bProfile.setOnAction(e -> primaryStage.setScene(test2.createScene()));
+        //bProfile.setOnAction(e -> primaryStage.setScene(test2.createScene()));
         //bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks().createSavedBooksScene()));
         bLogout.setOnAction(e -> primaryStage.setScene(createLoginScene()));
 
         l.setLayoutX(200);           l.setLayoutY(20);
         bSearch.setLayoutX(200);     bSearch.setLayoutY(150);
-        bProfile.setLayoutX(200);    bProfile.setLayoutY(180);
+       // bProfile.setLayoutX(200);    bProfile.setLayoutY(180);
         bSavedBooks.setLayoutX(200); bSavedBooks.setLayoutY(210);
         bLogout.setLayoutX(200);     bLogout.setLayoutY(250);
 
-        newPane.getChildren().addAll(l, bSearch, bProfile, bSavedBooks, bLogout);
+        newPane.getChildren().addAll(l, bSearch, bSavedBooks, bLogout);
         return new Scene(newPane, 600, 400);
     }
 
