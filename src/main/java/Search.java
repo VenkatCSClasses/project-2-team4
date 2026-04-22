@@ -11,11 +11,17 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import database.UserBooksRepo;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.User;
 
@@ -28,12 +34,12 @@ public class Search {
     
     public Scene createSearchScene(){
         Pane newPane = new Pane();
-        newPane.setStyle("-fx-background-color: grey;");
+        newPane.setStyle("-fx-background-color: #CCD4BC;");
         Label l = new Label("Enter a title, author, or genre into the search bar and press the corresponding button!");
         TextField searchTF = new TextField();
         Button bSearchTitle = new Button("Search by Title");
         Button bSearchAuth = new Button("Search by Author");
-        Button bSearchGenre = new Button("Search by Genre");
+        Button bSearchGenre = new Button("Browse by Genre");
         Button bBack = new Button("Back");
         bBack.setOnAction(e -> {
             Stage stage = (Stage) bSearchTitle.getScene().getWindow();
@@ -131,31 +137,9 @@ public class Search {
             //gets all books from CSV and puts them in beans with getters for various fields
             CsvToBean<Book> csvReader = new CsvToBeanBuilder(reader).withType(Book.class).withSeparator(',').withIgnoreLeadingWhiteSpace(true).withIgnoreEmptyLine(true).build();
             List<Book> books = csvReader.parse();
-
-            //parses csv list 1st for substrings
-            for (Book book : books){
-                String genres = book.getSubjects();
-                if (genres.toUpperCase().contains(searchTF.getText().toUpperCase())){
-                    if (results.size() < 5){
-                        results.add(book);
-                    }
-                }
-            }
-            //2nd parse is for similar strings
-            if (results.size() < 5);
-                for (Book book : books){
-                    String genres = book.getSubjects();
-                    LevenshteinDistance distance = LevenshteinDistance.getDefaultInstance();
-                    int result = distance.apply(genres,searchTF.getText());
-                    if (result <= 1){
-                        if (results.size() <= 5){
-                            results.add(book);
-                        }
-                    }
-                }
-
+            
             Stage stage = (Stage) bSearchTitle.getScene().getWindow();
-            stage.setScene(createResultsScene(results));
+            stage.setScene(createGenreScene(books));
 
         });
 
@@ -192,8 +176,8 @@ public class Search {
         newPane.getChildren().add(l);
         newPane.getChildren().add(searchTF);
         newPane.getChildren().add(bBack);
-        Scene SearchScene = new Scene(newPane, 600, 400);
-        SearchScene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        Scene SearchScene = new Scene(newPane, 1200, 800);
+        SearchScene.getStylesheets().add("styles.css");
         return SearchScene;
     }
 
@@ -251,31 +235,31 @@ public class Search {
         bBook1.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
             SelectedBook test = new SelectedBook(user, results.get(0), results);
-            stage.setScene(test.CreateSelectScene());
+            stage.setScene(test.CreateSelectScene(false));
         });
 
         bBook2.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
             SelectedBook test = new SelectedBook(user, results.get(1), results);
-            stage.setScene(test.CreateSelectScene());
+            stage.setScene(test.CreateSelectScene(false));
         });
 
         bBook3.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
             SelectedBook test = new SelectedBook(user, results.get(2), results);
-            stage.setScene(test.CreateSelectScene());
+            stage.setScene(test.CreateSelectScene(false));
         });
 
         bBook4.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
             SelectedBook test = new SelectedBook(user, results.get(3), results);
-            stage.setScene(test.CreateSelectScene());
+            stage.setScene(test.CreateSelectScene(false));
         });
 
         bBook5.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
             SelectedBook test = new SelectedBook(user, results.get(4), results);
-            stage.setScene(test.CreateSelectScene());
+            stage.setScene(test.CreateSelectScene(false));
         });
 
         //back button layout
@@ -289,8 +273,182 @@ public class Search {
 
         newPane.getChildren().addAll(bk1, bk2, bk3, bk4, bk5, bBook1, bBook2, bBook3, bBook4, bBook5, bBack);
        
-        Scene scene = new Scene(newPane, 600, 400);
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        return scene;
+    
+        
+        Scene ResultsScene = new Scene(newPane, 1200, 800);
+        ResultsScene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        return ResultsScene;
     }
+
+    public Scene createGenreScene(List<Book> books){
+        BorderPane newPane = new BorderPane();
+        Label l = new Label("Select a Genre:");
+        Button scifi = new Button("Science Fiction");
+        Button adventure = new Button("Adventure");
+        Button history = new Button("History");
+        Button poetry = new Button("Poetry");
+        Button mystery = new Button("Mystery");
+        Button fantasy = new Button("Fantasy");
+
+        scifi.setOnAction(e -> {
+            ArrayList<Book> results = new ArrayList<>();
+            for (Book book : books){
+                String subjects = book.getSubjects();
+                if (subjects.toUpperCase().contains("SCIENCE FICTION")){
+                    if (results.size() < 15){
+                        results.add(book);
+                    }
+                }
+            }
+            Stage stage = (Stage) scifi.getScene().getWindow();
+            stage.setScene(createGenreResultsScene(results));
+        
+        });
+
+        adventure.setOnAction(e -> {
+            ArrayList<Book> results = new ArrayList<>();
+            for (Book book : books){
+                String subjects = book.getSubjects();
+                if (subjects.toUpperCase().contains("ADVENTURE")){
+                    if (results.size() < 15){
+                        results.add(book);
+                    }
+                }
+            }
+
+            Stage stage = (Stage) scifi.getScene().getWindow();
+            stage.setScene(createGenreResultsScene(results));
+        });
+
+        history.setOnAction(e -> {
+            ArrayList<Book> results = new ArrayList<>();
+            for (Book book : books){
+                String subjects = book.getSubjects();
+                if (subjects.toUpperCase().contains("HISTORY")){
+                    if (results.size() < 15){
+                        results.add(book);
+                    }
+                }
+            }
+
+            Stage stage = (Stage) scifi.getScene().getWindow();
+            stage.setScene(createGenreResultsScene(results));
+        });
+
+        poetry.setOnAction(e -> {
+            ArrayList<Book> results = new ArrayList<>();
+            for (Book book : books){
+                String subjects = book.getSubjects();
+                if (subjects.toUpperCase().contains("POETRY")){
+                    if (results.size() < 15){
+                        results.add(book);
+                    }
+                }
+            }
+
+            Stage stage = (Stage) scifi.getScene().getWindow();
+            stage.setScene(createGenreResultsScene(results));
+        });
+
+        mystery.setOnAction(e -> {
+            ArrayList<Book> results = new ArrayList<>();
+            for (Book book : books){
+                String subjects = book.getSubjects();
+                if (subjects.toUpperCase().contains("MYSTERY")){
+                    if (results.size() < 15){
+                        results.add(book);
+                    }
+                }
+            }
+
+            Stage stage = (Stage) scifi.getScene().getWindow();
+            stage.setScene(createGenreResultsScene(results));
+        });
+
+        fantasy.setOnAction(e -> {
+            ArrayList<Book> results = new ArrayList<>();
+            for (Book book : books){
+                String subjects = book.getSubjects();
+                if (subjects.toUpperCase().contains("FANTASY")){
+                    if (results.size() < 15){
+                        results.add(book);
+                    }
+                }
+            }
+
+            Stage stage = (Stage) scifi.getScene().getWindow();
+            stage.setScene(createGenreResultsScene(results));
+        });
+
+        Button bBack = new Button("Back");
+        bBack.setOnAction(e -> {
+            Stage stage = (Stage) bBack.getScene().getWindow();
+            stage.setScene(createSearchScene());
+        });
+
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10));
+        vbox.setSpacing(8);
+        vbox.getChildren().addAll(scifi, adventure, history, poetry, mystery, fantasy, bBack);
+        vbox.setAlignment(Pos.CENTER);
+
+        newPane.setCenter(vbox);
+        newPane.setTop(l);
+
+        Scene GenreScene = new Scene(newPane, 1200, 800);
+        GenreScene.getStylesheets().add("styles.css");
+        return GenreScene;
+    }
+
+    public Scene createGenreResultsScene(ArrayList<Book> results){
+        BorderPane newPane = new BorderPane();
+        VBox labels = new VBox();
+        labels.setPadding(new Insets(10));
+        labels.setSpacing(25);
+        labels.setAlignment(Pos.CENTER);
+        List<Label> lList = new ArrayList<>();
+        for (Book book : results){
+            lList.add(new Label(book.getTitle() + " by " + book.getAuthors() + "\n"));
+        }
+        labels.getChildren().addAll(lList);
+
+        VBox buttons = new VBox();
+        buttons.setPadding(new Insets(10));
+        buttons.setSpacing(8);
+        buttons.setAlignment(Pos.CENTER);
+        List<Button> bList = new ArrayList<>();
+        for (Book book : results){
+            Button b1 = new Button("Select This Book");
+            b1.setOnAction(e -> {
+                Stage stage = (Stage) b1.getScene().getWindow();
+                SelectedBook test = new SelectedBook(user, book, results);
+                stage.setScene(test.CreateSelectScene(true));
+            });
+            bList.add(b1);
+        }
+        buttons.getChildren().addAll(bList);
+
+        HBox holder = new HBox();
+        holder.getChildren().addAll(labels,buttons);
+        holder.setAlignment(Pos.CENTER);
+
+        HBox back = new HBox();
+        Button bBack = new Button("Back");
+        bBack.setOnAction(e -> {
+            Stage stage = (Stage) bBack.getScene().getWindow();
+            stage.setScene(createSearchScene());
+        });
+        back.getChildren().addAll(bBack);
+        back.setPadding(new Insets(10));
+        back.setAlignment(Pos.CENTER);
+
+        newPane.setCenter(holder);
+        newPane.setBottom(back);
+
+        Scene GenreScene = new Scene(newPane, 1200, 800);
+        GenreScene.getStylesheets().add("styles.css");
+        return GenreScene;
+    }
+
+    
 }

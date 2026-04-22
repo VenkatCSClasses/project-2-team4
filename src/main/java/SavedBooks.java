@@ -1,7 +1,13 @@
+import javafx.animation.PauseTransition;
+import javafx.concurrent.Worker;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.User;
 import database.UserBooksRepo;
 import java.util.*;
@@ -115,27 +121,64 @@ public class SavedBooks {
     }
 
     private Scene createReaderScene(Stage stage, int gutenbergId, String bookTitle) {
-        Pane pane = new Pane();
+        BorderPane pane = new BorderPane();
 
         javafx.scene.web.WebView webView = new javafx.scene.web.WebView();
+        Worker<Void> worker = webView.getEngine().getLoadWorker();
+
+        // Create a 10-second timeout timer
+        PauseTransition timeout = new PauseTransition(Duration.seconds(10));
+        timeout.setOnFinished(e -> {
+            if (worker.isRunning()) {
+                worker.cancel();
+                Label errorLabel = new Label("Book could not be read. Please check your internet connection and try again.");
+                Button bBack = new Button("Back to Search");
+                Button retryRead = new Button("Try Again");
+                
+                HBox buttons = new HBox(bBack,retryRead);
+                buttons.setAlignment(Pos.CENTER);
+
+                pane.setTop(errorLabel);
+                pane.setCenter(buttons);
+            }
+        });
         webView.getEngine().load("https://www.gutenberg.org/cache/epub/" + gutenbergId + "/pg" + gutenbergId + "-images.html");
-        webView.setPrefSize(600, 360);
-        webView.setLayoutX(0);
-        webView.setLayoutY(40);
+        webView.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == Worker.State.RUNNING){
+                timeout.playFromStart();
+            }else if (newState == Worker.State.FAILED) {
+                timeout.stop();
+                Label errorLabel = new Label("Book could not be read. Please check your internet connection and try again.");
+                Button bBack = new Button("Back to Library");
+                bBack.setOnAction(e -> stage.setScene(
+                            new SavedBooks(user).createSavedBooksScene()));
+                
+                HBox buttons = new HBox(bBack);
+                buttons.setAlignment(Pos.CENTER);
 
-        Label titleLabel = new Label(bookTitle);
-        Button bBack = new Button("Back to Library");
+                pane.setTop(errorLabel);
+                pane.setCenter(buttons);
+            }else if (newState == Worker.State.SUCCEEDED){
+                timeout.stop();
+                webView.setPrefSize(600, 360);
+                webView.setLayoutX(0);
+                webView.setLayoutY(40);
 
-        titleLabel.setLayoutX(10); titleLabel.setLayoutY(10);
-        bBack.setLayoutX(480);     bBack.setLayoutY(10);
+                Label titleLabel = new Label(bookTitle);
+                Button bBack = new Button("Back to Search");
+                HBox topHolder = new HBox(titleLabel, bBack);
+                topHolder.setSpacing(10);
+                topHolder.setAlignment(Pos.CENTER);
 
-        bBack.setOnAction(e -> stage.setScene(
-            new SavedBooks(user).createSavedBooksScene()));
+                bBack.setOnAction(e -> stage.setScene(
+                            new SavedBooks(user).createSavedBooksScene()));
 
-        pane.getChildren().addAll(titleLabel, bBack, webView);
-        
-        Scene scene = new Scene(pane, 1200, 800);
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        return scene;
+                pane.setCenter(webView);
+                pane.setTop(topHolder);
+            }
+        });
+        Scene readerScene = new Scene(pane, 1200, 800);
+        readerScene.getStylesheets().add("styles.css");
+        return readerScene;
     }
 }
