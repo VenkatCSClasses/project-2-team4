@@ -60,9 +60,9 @@ public class MainApp extends Application {
         bSearch.setPrefSize(100, 50);
         bSearch.setStyle("-fx-font: 15px Courier;");
 
-        Button bProfile = new Button("Profile");
-        bProfile.setPrefSize(100, 50);
-        bProfile.setStyle("-fx-font: 15px Courier;");
+        // Button bProfile = new Button("Profile");
+        // bProfile.setPrefSize(100, 50);
+        // bProfile.setStyle("-fx-font: 15px Courier;");
 
         Button bSavedBooks = new Button("My Library");
         bSavedBooks.setPrefSize(100, 50);
@@ -75,7 +75,7 @@ public class MainApp extends Application {
         
         Search test = new Search(user);
         bSearch.setOnAction(e -> primaryStage.setScene(test.createSearchScene()));        
-        bProfile.setOnAction(e -> primaryStage.setScene(new Profile().createProfileScene()));
+        //bProfile.setOnAction(e -> primaryStage.setScene(new Profile().createProfileScene()));
         bSavedBooks.setOnAction(e -> primaryStage.setScene(new SavedBooks(user).createSavedBooksScene()));
         bLogout.setOnAction(e -> primaryStage.setScene(createLoginScene()));
 
@@ -126,7 +126,7 @@ public class MainApp extends Application {
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
         hbox.setSpacing(10);
-        hbox.getChildren().addAll(bSearch, bProfile, bSavedBooks, bLogout);
+        hbox.getChildren().addAll(bSearch, bSavedBooks, bLogout);
         hbox.setAlignment(Pos.CENTER);
         //hbox.setStyle("-fx-background-color: #CCD4BC;");
 
