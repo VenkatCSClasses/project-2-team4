@@ -1,11 +1,11 @@
+database\UserBooksRepo.class
 MainApp.class
-database/UserBooksRepo.class
 Book.class
 SelectedBook.class
-database/DatabaseManager.class
-database/UserRepo.class
-service/Authentication.class
-passwordUtil/PasswordUtil.class
+database\DatabaseManager.class
+database\UserRepo.class
+model\User.class
 SavedBooks.class
+service\Authentication.class
 Search.class
-model/User.class
+passwordUtil\PasswordUtil.class

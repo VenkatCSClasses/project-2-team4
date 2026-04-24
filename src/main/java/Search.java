@@ -33,10 +33,10 @@ public class Search {
     }
     
     public Scene createSearchScene(){
-        Pane newPane = new Pane();
-        newPane.setStyle("-fx-background-color: #CCD4BC;");
+        BorderPane newPane = new BorderPane();
         Label l = new Label("Enter a title, author, or genre into the search bar and press the corresponding button!");
         TextField searchTF = new TextField();
+        searchTF.prefWidth(150);
         Button bSearchTitle = new Button("Search by Title");
         Button bSearchAuth = new Button("Search by Author");
         Button bSearchGenre = new Button("Browse by Genre");
@@ -144,46 +144,30 @@ public class Search {
         });
 
 
+        HBox searchButtons = new HBox(bSearchTitle, bSearchAuth, bSearchGenre);
+        searchButtons.setPadding(new Insets(15, 12, 15, 12));
+        searchButtons.setSpacing(10);
+        searchButtons.setAlignment(Pos.CENTER);
 
-        l.setLayoutX(200);
-        l.setLayoutY(0);
+        VBox search = new VBox(searchTF, searchButtons, bBack);
+        search.setPadding(new Insets(10));
+        search.setSpacing(8);
+        search.setAlignment(Pos.CENTER);
 
+        VBox label = new VBox(l);
+        label.setPadding(new Insets(10));
+        label.setSpacing(8);
+        label.setAlignment(Pos.CENTER);
 
-        bSearchTitle.setLayoutX(100);
-        bSearchTitle.setLayoutY(200);
-        bSearchTitle.setMinWidth(100);
-
-        bSearchAuth.setLayoutX(200);
-        bSearchAuth.setLayoutY(200);
-        bSearchAuth.setMinWidth(100);
-
-
-        bSearchGenre.setLayoutX(300);
-        bSearchGenre.setLayoutY(200);
-        bSearchGenre.setMinWidth(100);
-
-
-        bBack.setLayoutX(0);
-        bBack.setLayoutY(0);
-
-
-        searchTF.setLayoutX(200);
-        searchTF.setLayoutY(175);
-
-        newPane.getChildren().add(bSearchTitle);
-        newPane.getChildren().add(bSearchAuth);
-        newPane.getChildren().add(bSearchGenre);
-        newPane.getChildren().add(l);
-        newPane.getChildren().add(searchTF);
-        newPane.getChildren().add(bBack);
+        newPane.setCenter(search);
+        newPane.setTop(label);
         Scene SearchScene = new Scene(newPane, 1200, 800);
         SearchScene.getStylesheets().add("styles.css");
         return SearchScene;
     }
 
     public Scene createResultsScene(ArrayList<Book> results){
-        Pane newPane = new Pane();
-        newPane.setStyle("-fx-background-color: grey;");
+        BorderPane newPane = new BorderPane();
 
         Label bk1 = new Label(results.get(0).getTitle() + " by " + results.get(0).getAuthors() + "\n");
         Label bk2 = new Label(results.get(1).getTitle() + " by " + results.get(1).getAuthors() + "\n");
@@ -199,37 +183,25 @@ public class Search {
 
         Button bBack = new Button("Search Again");
 
-        //layout for book labels
-        bk1.setLayoutX(150);
-        bk1.setLayoutY(0);
-        
-        bk2.setLayoutX(150);
-        bk2.setLayoutY(50);
+        VBox buttons = new VBox(bBook1, bBook2, bBook3, bBook4, bBook5);
+        buttons.setPadding(new Insets(10));
+        buttons.setSpacing(8);
+        buttons.setAlignment(Pos.CENTER);
 
-        bk3.setLayoutX(150);
-        bk3.setLayoutY(100);
+        VBox booksBox = new VBox(bk1, bk2, bk3, bk4, bk5);
+        booksBox.setPadding(new Insets(10));
+        booksBox.setSpacing(8);
+        booksBox.setSpacing(25);
+        booksBox.setAlignment(Pos.CENTER);
 
-        bk4.setLayoutX(150);
-        bk4.setLayoutY(150);
+        HBox holder = new HBox(booksBox, buttons);
+        holder.setPadding(new Insets(10));
+        holder.setAlignment(Pos.CENTER);
 
-        bk5.setLayoutX(150);
-        bk5.setLayoutY(200);
-        
-        //layout for book buttons
-        bBook1.setLayoutX(450);
-        bBook1.setLayoutY(0);
-
-        bBook2.setLayoutX(450);
-        bBook2.setLayoutY(50);
-
-        bBook3.setLayoutX(450);
-        bBook3.setLayoutY(100);
-
-        bBook4.setLayoutX(450);
-        bBook4.setLayoutY(150);
-
-        bBook5.setLayoutX(450);
-        bBook5.setLayoutY(200);
+        VBox back = new VBox(bBack);
+        back.setPadding(new Insets(10));
+        back.setSpacing(8);
+        back.setAlignment(Pos.CENTER);
 
         //actions for book selection buttons
         bBook1.setOnAction(e -> {
@@ -262,18 +234,14 @@ public class Search {
             stage.setScene(test.CreateSelectScene(false));
         });
 
-        //back button layout
-        bBack.setLayoutX(0);
-        bBack.setLayoutY(0);
 
         bBack.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
             stage.setScene(createSearchScene());
         });
-
-        newPane.getChildren().addAll(bk1, bk2, bk3, bk4, bk5, bBook1, bBook2, bBook3, bBook4, bBook5, bBack);
        
-    
+        newPane.setCenter(holder);
+        newPane.setBottom(back);
         
         Scene ResultsScene = new Scene(newPane, 1200, 800);
         ResultsScene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
