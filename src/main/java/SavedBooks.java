@@ -26,16 +26,16 @@ public class SavedBooks {
     }
 
     public Scene createSavedBooksScene() {
-        Pane newPane = new Pane();
-       // newPane.setStyle("-fx-background-color: grey;");
+        BorderPane newPane = new BorderPane();
 
         Label title = new Label("My Saved Books — " + user.getUsername());
         Label statusLabel = new Label();
         Button bBack = new Button("Back");
 
-        title.setLayoutX(200);      title.setLayoutY(10);
-        bBack.setLayoutX(0);        bBack.setLayoutY(0);
-        statusLabel.setLayoutX(50); statusLabel.setLayoutY(370);
+        HBox holder = new HBox(title,bBack);
+        holder.setPadding(new Insets(10));
+        holder.setSpacing(10);
+        holder.setAlignment(Pos.CENTER);
 
         bBack.setOnAction(e -> {
             Stage stage = (Stage) bBack.getScene().getWindow();
@@ -44,15 +44,15 @@ public class SavedBooks {
             stage.setScene(app.createMainScene(user));
         });
 
-        loadBooks(newPane, statusLabel);
+        newPane.setCenter(loadBooks(newPane, statusLabel));
+        newPane.setTop(holder);
 
-        newPane.getChildren().addAll(title, bBack, statusLabel);
         Scene savedBooksScene = new Scene(newPane, 1200, 800);
         savedBooksScene.getStylesheets().add("styles.css");
         return savedBooksScene;
     }
 
-    private void loadBooks(Pane pane, Label statusLabel) {
+    private VBox loadBooks(Pane pane, Label statusLabel) {
         VBox mainBox = new VBox();
         mainBox.setPadding(new Insets(20));
         mainBox.setSpacing(12);
@@ -66,11 +66,8 @@ public class SavedBooks {
 
             if (books.isEmpty()) {
                 Label empty = new Label("No saved books yet — search for books to add!");
-                // empty.setLayoutX(150);
-                // empty.setLayoutY(150);
                 mainBox.getChildren().add(empty);
-                pane.getChildren().add(mainBox);
-                return;
+                return mainBox;
             }
 
             //for (int i = 0; i < books.size(); i++) {
@@ -112,7 +109,6 @@ public class SavedBooks {
                     } catch (Exception ex) {
                         statusLabel.setText("Error: " + ex.getMessage());
                     }
-                    //stage.setScene(createReaderScene(stage, gutId, bookTitle));
                 });
 
                 bRemove.setOnAction(e -> {
@@ -144,11 +140,12 @@ public class SavedBooks {
                 //pane.getChildren().addAll(bookLabel, bRead, bStatus, bRemove);
                 mainBox.getChildren().add(row);
             }
-            pane.getChildren().add(mainBox);
+            return mainBox;
 
         } catch (Exception e) {
             statusLabel.setText("Failed to load books: " + e.getMessage());
             System.out.println(e.getMessage());
+            return mainBox;
         }
     }
 
