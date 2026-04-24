@@ -33,10 +33,10 @@ public class Search {
     }
     
     public Scene createSearchScene(){
-        Pane newPane = new Pane();
-        newPane.setStyle("-fx-background-color: #CCD4BC;");
+        BorderPane newPane = new BorderPane();
         Label l = new Label("Enter a title, author, or genre into the search bar and press the corresponding button!");
         TextField searchTF = new TextField();
+        searchTF.prefWidth(150);
         Button bSearchTitle = new Button("Search by Title");
         Button bSearchAuth = new Button("Search by Author");
         Button bSearchGenre = new Button("Browse by Genre");
@@ -144,38 +144,23 @@ public class Search {
         });
 
 
+        HBox searchButtons = new HBox(bSearchTitle, bSearchAuth, bSearchGenre);
+        searchButtons.setPadding(new Insets(15, 12, 15, 12));
+        searchButtons.setSpacing(10);
+        searchButtons.setAlignment(Pos.CENTER);
 
-        l.setLayoutX(200);
-        l.setLayoutY(0);
+        VBox search = new VBox(searchTF, searchButtons, bBack);
+        search.setPadding(new Insets(10));
+        search.setSpacing(8);
+        search.setAlignment(Pos.CENTER);
 
+        VBox label = new VBox(l);
+        label.setPadding(new Insets(10));
+        label.setSpacing(8);
+        label.setAlignment(Pos.CENTER);
 
-        bSearchTitle.setLayoutX(100);
-        bSearchTitle.setLayoutY(200);
-        bSearchTitle.setMinWidth(100);
-
-        bSearchAuth.setLayoutX(200);
-        bSearchAuth.setLayoutY(200);
-        bSearchAuth.setMinWidth(100);
-
-
-        bSearchGenre.setLayoutX(300);
-        bSearchGenre.setLayoutY(200);
-        bSearchGenre.setMinWidth(100);
-
-
-        bBack.setLayoutX(0);
-        bBack.setLayoutY(0);
-
-
-        searchTF.setLayoutX(200);
-        searchTF.setLayoutY(175);
-
-        newPane.getChildren().add(bSearchTitle);
-        newPane.getChildren().add(bSearchAuth);
-        newPane.getChildren().add(bSearchGenre);
-        newPane.getChildren().add(l);
-        newPane.getChildren().add(searchTF);
-        newPane.getChildren().add(bBack);
+        newPane.setCenter(search);
+        newPane.setTop(label);
         Scene SearchScene = new Scene(newPane, 1200, 800);
         SearchScene.getStylesheets().add("styles.css");
         return SearchScene;
