@@ -11,3 +11,6 @@ https://docs.google.com/document/d/1S9wM5b76LGXwzVOFlHN9EMhisN919FD_ku9UxcKVPKM/
 
 Scrum Diary:
 https://docs.google.com/document/d/1ojr-jXbMHN2DDmy5UyXlCafpM6ZRrjb3gz6IDgujaJE/edit?tab=t.0
+
+State Diagram:
+https://mermaid.ai/d/014ce42a-4f2d-4a33-8216-adc4fb94a789
