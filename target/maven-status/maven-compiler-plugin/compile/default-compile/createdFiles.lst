@@ -1,11 +1,5 @@
-database\UserBooksRepo.class
 MainApp.class
 Book.class
 SelectedBook.class
-database\DatabaseManager.class
-database\UserRepo.class
-model\User.class
 SavedBooks.class
-service\Authentication.class
 Search.class
-passwordUtil\PasswordUtil.class
