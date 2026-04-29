@@ -162,9 +162,8 @@ public class SavedBooks {
                 worker.cancel();
                 Label errorLabel = new Label("Book could not be read. Please check your internet connection and try again.");
                 Button bBack = new Button("Back to Search");
-                Button retryRead = new Button("Try Again");
                 
-                HBox buttons = new HBox(bBack,retryRead);
+                HBox buttons = new HBox(bBack);
                 buttons.setAlignment(Pos.CENTER);
 
                 pane.setTop(errorLabel);
